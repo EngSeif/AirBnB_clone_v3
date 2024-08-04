@@ -8,7 +8,7 @@ from models.user import User
 
 @app_views.route('/users', methods=['GET'],
                  strict_slashes=False)
-def Get_all():
+def Get_all_Users():
     """ Retrieves the list of all User objects """
     users = storage.all(User).values()
     users_list = [user.to_dict() for user in users]
@@ -49,7 +49,7 @@ def Create_User():
     if 'password' not in data:
         abort(400, description="Missing password")
     new_user = User(**data)
-    storage.new(User)
+    storage.new(new_user)
     storage.save()
     return new_user.to_dict(), 201
 

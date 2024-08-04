@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """  handles all default RESTFul API actions """
 from flask import abort, request
 from models import storage

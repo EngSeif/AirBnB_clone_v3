@@ -14,6 +14,11 @@ def storagee_close(expection=None):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(error):
+    return {"error": "Not found"}, 404
+
+
 if __name__ == "__main__":
     import os
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')

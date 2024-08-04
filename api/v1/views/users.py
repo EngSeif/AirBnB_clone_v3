@@ -34,15 +34,6 @@ def Del_User(user_id):
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
-    places = storage.all(Place).values()
-    for place in places:
-        if place.user_id == user_id:
-            reviews = storage.all(Review).values()
-            for review in reviews:
-                if review.place_id == place.id:
-                    storage.delete(review)
-            storage.delete(place)
-            storage.save()
     storage.delete(user)
     storage.save()
     return {}, 200

@@ -48,7 +48,7 @@ def create_ameniti():
     new_ameniti = Amenity(**data)
     storage.new(new_ameniti)
     storage.save()
-    return new_ameniti.to_dict()
+    return new_ameniti.to_dict(), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
@@ -65,4 +65,4 @@ def Update_ameniti(amenity_id):
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(ameniti, key, value)
     storage.save()
-    return ameniti.to_dict()
+    return ameniti.to_dict(), 200

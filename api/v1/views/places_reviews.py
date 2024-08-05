@@ -62,6 +62,7 @@ def create_Review(place_id):
     user = storage.get(User, data['user_id'])
     if user is None:
         abort(404)
+    data['place_id'] = place_id
     new_review = Review(**data)
     storage.new(new_review)
     storage.save()

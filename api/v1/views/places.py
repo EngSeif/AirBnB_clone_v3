@@ -61,6 +61,7 @@ def create_place(city_id):
     user = storage.get(User, data['user_id'])
     if user is None:
         abort(404)
+    data['city_id'] = city_id
     new_place = Place(**data)
     storage.new(new_place)
     storage.save()
@@ -81,4 +82,5 @@ def update_place(place_id):
     for key, value in data.items():
         if key not in ignore_k:
             setattr(place, key, value)
+    storage.save()
     return jsonify(place.to_dict()), 200

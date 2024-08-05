@@ -20,7 +20,7 @@ def get_place_review(place_id):
     for review in reviews:
         if review.place_id == place_id:
             place_reviews.append(review.to_dict())
-    return place_reviews
+    return jsonify(place_reviews)
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'],
@@ -30,7 +30,7 @@ def get_review(review_id):
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
-    return review.to_dict()
+    return jsonify(review.to_dict())
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
@@ -42,7 +42,7 @@ def del_review(review_id):
         abort(404)
     storage.delete(review)
     storage.save()
-    return {}, 200
+    return jsonify({}), 200
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
@@ -65,7 +65,7 @@ def create_Review(place_id):
     new_review = Review(**data)
     storage.new(new_review)
     storage.save()
-    return new_review.to_dict(), 201
+    return jsonify(new_review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
@@ -82,4 +82,4 @@ def update_review(review_id):
         if key not in ignore_k:
             setattr(review, key, value)
     storage.save()
-    return review.to_dict(), 200
+    return jsonify(review.to_dict()), 200

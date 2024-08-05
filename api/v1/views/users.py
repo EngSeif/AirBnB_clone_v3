@@ -14,7 +14,7 @@ def Get_all_Users():
     """ Retrieves the list of all User objects """
     users = storage.all(User).values()
     users_list = [user.to_dict() for user in users]
-    return users_list
+    return jsonify(users_list)
 
 
 @app_views.route('/users/<user_id>', methods=['GET'],
@@ -24,7 +24,7 @@ def Get_User(user_id):
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
-    return user.to_dict()
+    return jsonify(user.to_dict())
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
@@ -36,7 +36,7 @@ def Del_User(user_id):
         abort(404)
     storage.delete(user)
     storage.save()
-    return {}, 200
+    return jsonify({}), 200
 
 
 @app_views.route('/users', methods=['POST'],
@@ -53,7 +53,7 @@ def Create_User():
     new_user = User(**data)
     storage.new(new_user)
     storage.save()
-    return new_user.to_dict(), 201
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'],
@@ -70,4 +70,4 @@ def Update_User(user_id):
         if key not in ['id', 'email', 'created_at', 'updated_at']:
             setattr(user, key, value)
     storage.save()
-    return user.to_dict(), 200
+    return jsonify(user.to_dict()), 200

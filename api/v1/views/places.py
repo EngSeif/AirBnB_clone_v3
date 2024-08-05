@@ -7,6 +7,7 @@ from models.place import Place
 from models.city import City
 from models.user import User
 
+
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_city_places(city_id):
@@ -14,12 +15,7 @@ def get_city_places(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    places = storage.all(Place).values()
-    city_places = []
-    for place in places:
-        if place.city_id == city_id:
-            city_places.append(place.to_dict())
-    return jsonify(city_places)
+    return jsonify([place.to_dict() for place in city.places])
 
 
 @app_views.route('/places/<place_id>', methods=['GET'],

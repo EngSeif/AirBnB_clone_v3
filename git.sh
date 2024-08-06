@@ -18,4 +18,4 @@ git commit -m "$commit_word"
 # Push the changes to the remote repository
 git push
 
-rm commit_word
+rm $commit_word

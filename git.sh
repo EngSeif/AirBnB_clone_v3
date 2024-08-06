@@ -8,7 +8,7 @@ else
         commit_word="upload"
 fi;
 
-touch test
+touch $commit_word
 # Add all the files in the current directory to the Git staging area
 git add .
 
@@ -18,4 +18,4 @@ git commit -m "$commit_word"
 # Push the changes to the remote repository
 git push
 
-rm test
+rm commit_word
